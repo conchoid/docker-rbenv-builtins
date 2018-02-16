@@ -1,0 +1,20 @@
+--- ./io.c
++++ ./io.c
+@@ -8072,7 +8072,7 @@
+ 
+ #define DEFULT_IOCTL_NARG_LEN (256)
+ 
+-#ifdef __linux__
++#if defined(__linux__) && defined(_IOC_SIZE)
+ static long
+ linux_iocparm_len(ioctl_req_t cmd)
+ {
+@@ -8105,7 +8105,7 @@
+ #endif
+ #ifdef IOCPARM_LEN
+     len = IOCPARM_LEN(cmd);	/* on BSDish systems we're safe */
+-#elif defined(__linux__)
++#elif defined(__linux__) && defined(_IOC_SIZE)
+     len = linux_iocparm_len(cmd);
+ #else
+     /* otherwise guess at what's safe */
